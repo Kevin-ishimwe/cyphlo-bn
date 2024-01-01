@@ -11,7 +11,7 @@ const optionsSSL = {
 };
 const app = express();
 const dotenv = require("dotenv");
-const server = http.createServer(optionsSSL, app);
+const server = http.createServer( app);
 
 dotenv.config();
 
