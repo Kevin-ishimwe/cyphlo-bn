@@ -29,6 +29,7 @@ const handleSocketfunction = async () => {
     setTimeout(handleChatFunction, 5000);
   }
 };
+
 handleSocketfunction();
 const PORT = process.env.PORT || 3000;
 app.use("/", (req, res) => {

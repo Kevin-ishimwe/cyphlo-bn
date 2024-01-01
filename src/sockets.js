@@ -36,13 +36,12 @@ const findOrCreateRoom = (activeRooms, id) => {
   return newRoom;
 };
 
-const removeUserFromRoom = (activeRooms, id, io) => {
+const removeUserFromRoom = (activeRooms, id, io, src) => {
   for (const room in activeRooms) {
     const index = activeRooms[room].indexOf(id);
     if (index !== -1) {
+      io.to(room).emit(`${src}:leave`, { userId: id, room: room });
       activeRooms[room] = [];
-
-      io.to(room).emit("chat:leave", { userId: id, room: room });
 
       console.log(`User ${id} disconnected from room ${room}`, activeRooms);
       break;
@@ -77,7 +76,7 @@ const ChatHandles = (io) => {
     });
     socket.on("disconnect", () => {
       console.log("******user disconnected*******", socket.id);
-      removeUserFromRoom(chatRooms, socket.id, io);
+      removeUserFromRoom(chatRooms, socket.id, io, "chat");
       // Handle disconnection logic here
     });
   });
@@ -135,7 +134,7 @@ const VideoHandles = (io) => {
     });
     socket.on("disconnect", () => {
       console.log("******user disconnected*******", socket.id);
-      // Handle disconnection logic here
+      removeUserFromRoom(peerRooms, socket.id, io, "video");
     });
   });
 };
