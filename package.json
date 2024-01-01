@@ -2,7 +2,7 @@
   "name": "cyphlo-bn",
   "version": "1.0.0",
   "description": "backend for my cyphlo project",
-  "main": "main.js",
+  "main": "./src/main.js",
   "scripts": {
     "test": "jest",
     "dev": "nodemon ./src/main.js"
